@@ -2,6 +2,10 @@ import requests
 from datetime import datetime
 from bs4 import BeautifulSoup
 
+import time
+import threading
+from queue import Queue
+
 HOST_ROZETKA = 'https://rozetka.com.ua/'
 HOST_EPICENTR = 'https://epicentrk.ua/'
 HOST_BIGL = 'https://bigl.ua/'
@@ -16,12 +20,16 @@ HEADERS = {
 }
 
 
+result = []
+
+
 def get_html(url, params=''):
     r = requests.get(url, headers=HEADERS, params=params)
     return r
 
 
-def get_groats_rozetka(url=URL_ROZETKA, count_items=3):
+def get_groats_rozetka(q, url=URL_ROZETKA, count_items=3):
+    event = threading.Event()
     html = get_html(url)
     soup = BeautifulSoup(html.text, 'lxml')
     items = soup.find_all('li', class_='catalog-grid__cell')
@@ -36,11 +44,12 @@ def get_groats_rozetka(url=URL_ROZETKA, count_items=3):
                 'link_item': item.find('a', class_='goods-tile__picture').get('href')
             }
         )
+    q.put((groats, event))
+    event.wait()
 
-    return groats
 
-
-def get_groats_epicentr(url=URL_EPICENTR, count_items=3):
+def get_groats_epicentr(q, url=URL_EPICENTR, count_items=3):
+    event = threading.Event()
     html = get_html(url)
     soup = BeautifulSoup(html.text, 'lxml')
     items = soup.find_all('div', class_='columns product-Wrap card-wrapper')
@@ -54,11 +63,12 @@ def get_groats_epicentr(url=URL_EPICENTR, count_items=3):
                 'link_item': HOST_EPICENTR + item.find('a', class_='custom-link custom-link--big custom-link--inverted custom-link--blue').get('href')
             }
         )
+    q.put((groats, event))
+    event.wait()
 
-    return groats
 
-
-def get_groats_bigl(url=URL_BIGL, count_items=3):
+def get_groats_bigl(q, url=URL_BIGL, count_items=3):
+    event = threading.Event()
     html = get_html(url)
     soup = BeautifulSoup(html.text, 'lxml')
     items = soup.find_all('div', class_='bgl-product')
@@ -72,19 +82,46 @@ def get_groats_bigl(url=URL_BIGL, count_items=3):
                 'link_item': item.find('a', class_='bgl-product__title').get('href')
             }
         )
+    q.put((groats, event))
+    event.wait()
 
-    return groats
+
+def packer(q, count_iterations):
+    for i in range(count_iterations):
+        value, event = q.get()
+        for j in value:
+            result.append(j)
+
+        event.set()
+        q.task_done()
+
+
+def get_groats(count_items=3):
+    global result
+    result = []
+    q = Queue()
+
+    thread_one = threading.Thread(target=get_groats_rozetka, args=(q, URL_ROZETKA, count_items))
+    thread_second = threading.Thread(target=get_groats_epicentr, args=(q, URL_EPICENTR, count_items))
+    thread_third = threading.Thread(target=get_groats_bigl, args=(q, URL_BIGL, count_items))
+    thread_packer = threading.Thread(target=packer, args=(q, count_items))
+    thread_one.start()
+    thread_second.start()
+    thread_third.start()
+    thread_packer.start()
+    q.join()
+    limit = count_items * 3
+    while len(result) < limit:
+        time.sleep(0.01)
+    return result
 
 
 if __name__ == '__main__':
     def print_items(items):
         for item in items:
             print(item)
-
-    groats_rozetka = get_groats_rozetka(URL_ROZETKA)
-
-    groats_epicentr = get_groats_epicentr(URL_EPICENTR)
-
-    groats_bigl = get_groats_bigl(URL_BIGL)
-
-    print_items(groats_epicentr)
+    a = datetime.now()
+    groats = get_groats(3)
+    b = datetime.now()
+    print_items(groats)
+    print(b-a)
