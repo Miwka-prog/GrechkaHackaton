@@ -24,16 +24,34 @@
 
 
     <div class="intro">
+        <div class="button">
+             <form method="POST" action="/">
+                 {% csrf_token %}
+                 <label for="select" class="select">
+                    <input type="radio" name="list" value="not_changed" id="bg" checked />
+                    <input type="radio" name="list" value="not_changed" id="select">
+                    <label class="bg" for="bg"></label>
+                    <div class="items">
+                        <input type="submit" name="list" value="0" id="list[0]">
+                        <label for="list[0]">Відсортувати від більшого до меншого</label>
+                        <input type="submit" name="list" value="1" id="list[1]">
+                        <label for="list[1]">Відсортувати від меншого до більшого</label>
+                        <span id="text">Оберіть як сортувати...</span>
+                    </div>
+                 </label>
+             </form>
+        </div>
         <div class="containerforgrechka">
             {% for name, price, url_img, url in array %}
-                <div class="grechka">
+                    <div class="grechka">
                     <span class="descr">{{ name }}</span>
-                 <a href="{{ url }}"><img class="imagegrechka" src="{{ url_img }}"></a>
-                <div class="pricediv"><h1>Ціна:  {{ price }} грн</h1></div>
-                </div>
-            {% endfor %}
+                    <a href="{{ url }}"><img class="imagegrechka" src="{{ url_img }}"></a>
+                    <div class="pricediv"><h1>Ціна:  {{ price }} грн</h1></div>
+                    </div>
+                {% endfor %}
         </div>
     </div>
+
 </body>
 
 </html>
