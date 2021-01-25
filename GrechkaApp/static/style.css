@@ -52,7 +52,6 @@ h1, h2 , h3, h4, h5 h6 {margin: 0}
     height: auto;
     min-height: 1200px;
     justify-content: space-between;
-
 }
 
 /* Header */
@@ -178,4 +177,142 @@ h1, h2 , h3, h4, h5 h6 {margin: 0}
 
 .pricediv {
     margin: 20px;
+}
+/* Buttom */
+
+/* скрываем все инпуты, чтобы все выглядело красиво */
+input
+{
+  display: none;
+}
+
+/* стилизуем стандартный текст лейбела(желательно смотреть этот стиль после .items) */
+
+#text
+{
+  position: absolute;
+  display: flex;
+  top: 0;
+  padding-left: 10px;
+  min-width: 260px;
+
+}
+
+/* Задаем параметры нашего селекта - ширину, высоту и line-height(для центрирования текста по вертикали;этот парметр меньше ширины на 4px, т.к. в нашем блоке есть border размером в 2px со всех сторон) */
+
+.select
+{
+  padding-top: 35px;
+  padding-left: 70px;
+  display: inline-block;
+  width: 260px;
+  height: 34px;
+  line-height: 35px;
+  position: absolute;
+  z-index: 2;
+}
+
+/* Это наша стрелочка, показывающая, что селект можно раскрыть */
+
+.select:before
+{
+  content: ">";
+  display: inline-block;
+  background: white;
+  position: absolute;
+  right: -70px;
+  top: 35px;
+  z-index: 2;
+  width: 34px;
+  height: 34px;
+  text-align: center;
+  line-height: 26px;
+  border: 2px solid #ddd;
+  transform: rotate(90deg);
+  cursor: pointer;
+}
+
+/* Если ничего не выбрано, то наш изначальный текст черного цвета, как и должно быть */
+
+.select input[name="list"]:not(:checked) ~ #text
+{
+  color: black;
+  background: white;
+}
+
+/* Если же что-то выбрано, то наш текст становится невидимым и встает сверху выбранного параметра, чтобы при клике на него можно было заного открыть селект, что не было реализовано прошлым автором */
+
+.select input[name="list"]:checked ~ #text
+{
+  background: transparent;
+  color: transparent;
+  z-index: 2;
+}
+
+/* Стилизация выключенного селекта */
+
+#select:disabled ~ .items #text
+{
+  background: #eee;
+}
+
+/* Стилизация блока с опциями. min-height сделана для фикса высоты при абсолютном позиционировании, overflow же сделан для фиксированной высоты(см. ниже) */
+
+.items
+{
+  display: block;
+  min-height: 35px;
+  position: absolute;
+  border: 2px solid #ddd;
+  overflow: hidden;
+  width: 260px;
+  cursor: pointer;
+}
+
+/* Если наш селект закрыт, то он имеет высоту 30px(сделано для того, чтобы слишком большие надписи не растягивали его в высоту)  */
+
+#select:not(:checked) ~ .items
+{
+  height: 34px;
+}
+
+/* Все лейбелы(названия опций) изначально скрыты */
+
+.items label
+{
+  border-top: 2px solid #ddd;
+  display: none;
+  padding-left: 10px;
+  background: white;
+}
+
+/* Тут много объяснять не надо - просто выделение при наведении */
+
+.items label:hover
+{
+  background: #eee;
+  cursor: pointer;
+}
+
+/* Опять же фикс из-за абсолютного позиционирования */
+
+#select:checked ~ .items
+{
+  padding-top: 30px;
+}
+
+/* Если наш селект открыт, то надо сделать все опции видимыми */
+
+#select:checked ~ .items label
+{
+  display: block;
+}
+
+/* Если какая-либо опция была выбрана, то сделать ее видимой(при выборе селект автоматически закроется) */
+
+.items input:checked + label
+{
+  display: block!important;
+  border: none;
+  background: white;
 }
