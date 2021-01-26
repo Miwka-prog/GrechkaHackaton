@@ -1,6 +1,7 @@
 # Інструкція по запуску програми
-* Откройте консоль windows (cmd)
-* Установите python с: официального сайта
-* Установите django через pip: pip install django.
-* Создайте свой django-проект: django-admin startproject project_name.
-* Запустите его через: python manage.py runserver 8000.
+* Встановіть проект з github
+* Встановіть python з офіційного сайту
+* Зайдіть в командний рядок 
+* Потрібно зайти в директорію проекту за допомогою команди: cd "шлях", приклад: cd "C:\Users\Zver\PycharmProjects\Grechka"
+* Встановіть всі бібліотеки, що знаходяться в текстовому файлі requirements.txt(команда: pip install назва бібліотеки)
+* Запустіть через команду: python manage.py runserver
