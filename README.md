@@ -8,4 +8,5 @@
 * Перейти по посиланню на сайт
 
 [![Watch the video](https://img.youtube.com/vi/JvgMRs3acGg/maxresdefault.jpg)](https://youtu.be/JvgMRs3acGg))
+*Натисніть на фото, щоб подивитись відео
 # Також ви можете перейти на наш сайти по посиланню: https://teflex.herokuapp.com/
