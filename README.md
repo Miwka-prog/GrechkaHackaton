@@ -7,6 +7,5 @@
 * Запустіть через команду: python manage.py runserver
 * Перейти по посиланню на сайт
 
-
-[![MouseMove](https://youtu.be/JvgMRs3acGg)]
+[![Watch the video](https://i.imgur.com/vKb2F1B.png)](https://youtu.be/JvgMRs3acGg))
 # Також ви можете перейти на наш сайти по посиланню: https://teflex.herokuapp.com/
