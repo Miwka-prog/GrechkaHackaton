@@ -8,5 +8,5 @@
 
 
 
-[[MouseMove](https://media2.giphy.com/media/04cu3kxJcLSd83xlaK/giphy.gif)]
+[[MouseMove](https://media2.giphy.com/media/04cu3kxJcLSd83xlaK/giphy.gif)()]
 # Також ви можете перейти на наш сайти по посиланню: https://teflex.herokuapp.com/
