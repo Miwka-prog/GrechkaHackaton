@@ -21,9 +21,6 @@
             </div>
         </div>
     </header>
-
-
-    <div class="intro">
         <div class="button">
              <form method="POST" action="/">
                  {% csrf_token %}
@@ -41,8 +38,9 @@
                  </label>
              </form>
         </div>
+    <div class="intro">
         <div class="containerforgrechka">
-            {% for name, price, url_img, url in array %}
+                {% for name, price, url_img, url in array %}
                     <div class="grechka">
                     <span class="descr">{{ name }}</span>
                     <a href="{{ url }}"><img class="imagegrechka" src="{{ url_img }}"></a>
@@ -51,7 +49,5 @@
                 {% endfor %}
         </div>
     </div>
-
 </body>
-
 </html>
