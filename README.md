@@ -8,5 +8,5 @@
 * Перейти по посиланню на сайт
 
 
-[![MouseMove](https://media3.giphy.com/media/DU8RTehV2KE3VJOz1A/giphy.gif)]
+[![MouseMove](https://youtu.be/JvgMRs3acGg)]
 # Також ви можете перейти на наш сайти по посиланню: https://teflex.herokuapp.com/
